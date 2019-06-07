@@ -17,10 +17,4 @@ use App\Category;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/insert', function () {
-    // $category = Category::find(1);
-    // $subcategory = new Subcategory(['name'=>'laptops']);
-    // $product->specifications()->save($subcategory);
-    return "this ";
-});
+Route::resource('admin/product','productController');

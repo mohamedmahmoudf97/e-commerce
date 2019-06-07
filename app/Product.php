@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     //
-    protected $fillable = ['name'];
+    protected $fillable = ['name','price','description','on_sale','sale_value','quantity','quantity_per_unit','brand_id','subcategory_id'];
     public function colors()
     {
-        return $this->belongsToMany('App\Color');
+        return $this->belongsToMany('App\Color')->withTimestamps();
     }
     public function images()
     {
@@ -22,14 +22,14 @@ class Product extends Model
     }
     public function keywords()
     {
-        return $this->belongsToMany('App\Keyword');
+        return $this->belongsToMany('App\Keyword')->withTimestamps();
     }
-    public function subcategories()
+    public function subcategory()
     {
-        return $this->belongsToMany('App\Subcategory');
+        return $this->belongsTo('App\Subcategory');
     }
-    public function brands()
+    public function brand()
     {
-        return $this->hasOne('App\Brand');
+        return $this->belongsTo('App\Brand');
     }
 }
