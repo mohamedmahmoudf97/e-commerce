@@ -53,87 +53,32 @@ class productController extends Controller
      */
     public function store(Request $request)
     {
-        //
         if(isset($request['on_sale'])){
             $request['on_sale'] = 1;
         }
         $product = Product::create($request->all());
-        // key word is ok
-
-        $keyword_1 = Keyword::where('name' ,'=' , $request['keyword_1']);
-        if($keyword_1->count() <= 0){
-        $product->keywords()->save(new Keyword(['name' => $request['keyword_1']]));
-        }else if($keyword_1->count() > 0){
-        $product->keywords()->attach(['keyword_id'=> $keyword_1->first()->id ]);
-        }
-        $keyword_2 = Keyword::where('name' ,'=' , $request['keyword_2']);
-        if($keyword_2->count() <= 0){
-        $product->keywords()->save(new Keyword(['name' => $request['keyword_2']]));
-        }else if($keyword_2->count() > 0){
-        $product->keywords()->attach(['keyword_id'=> $keyword_2->first()->id ]);
-        }
-        $keyword_3 = Keyword::where('name' ,'=' , $request['keyword_3']);
-        if($keyword_3->count() <= 0){
-        $product->keywords()->save(new Keyword(['name' => $request['keyword_3']]));
-        }else if($keyword_3->count() > 0){
-        $product->keywords()->attach(['keyword_id'=> $keyword_3->first()->id ]);
-        }
-        $keyword_4 = Keyword::where('name' ,'=' , $request['keyword_4']);
-        if($keyword_4->count() <= 0){
-        $product->keywords()->save(new Keyword(['name' => $request['keyword_4']]));
-        }else if($keyword_4->count() > 0){
-        $product->keywords()->attach(['keyword_id'=> $keyword_4->first()->id ]);
-        }
-        $keyword_5 = Keyword::where('name' ,'=' , $request['keyword_5']);
-        if($keyword_5->count() <= 0){
-        $product->keywords()->save(new Keyword(['name' => $request['keyword_5']]));
-        }else if($keyword_5->count() > 0){
-        $product->keywords()->attach(['keyword_id'=> $keyword_5->first()->id ]);
-        }
-        // colors is ok
-        $color_1 = Color::where('name' ,'=' , $request['color_1']);
-        if($color_1->count() <= 0){
-        $product->colors()->save(new Color(['name' => $request['color_1']]));
-        }else if($color_1->count() > 0){
-        $product->colors()->attach(['color_id'=> $color_1->first()->id ]);
-        }
-        $colors_2 = Color::where('name' ,'=' , $request['colors_2']);
-        if($color_1->count() <= 0){
-        $product->colors()->save(new Color(['name' => $request['colors_2']]));
-        }else if($colors_2->count() > 0){
-        $product->colors()->attach(['color_id'=> $colors_2->first()->id ]);
-        }
-        $colors_3 = Color::where('name' ,'=' , $request['colors_3']);
-        if($colors_3->count() <= 0){
-        $product->colors()->save(new Color(['name' => $request['colors_3']]));
-        }else if($colors_3->count() > 0){
-        $product->colors()->attach(['color_id'=> $colors_3->first()->id ]);
-        }
-        $colors_4 = Color::where('name' ,'=' , $request['colors_4']);
-        if($colors_4->count() <= 0){
-        $product->colors()->save(new Color(['name' => $request['colors_4']]));
-        }else if($colors_4->count() > 0){
-        $product->colors()->attach(['color_id'=> $colors_4->first()->id ]);
-        }
-        $colors_5 = Color::where('name' ,'=' , $request['colors_5']);
-        if($colors_5->count() <= 0){
-        $product->colors()->save(new Color(['name' => $request['colors_5']]));
-        }else if($colors_5->count() > 0){
-        $product->colors()->attach(['color_id'=> $colors_5->first()->id ]);
-        }
-
-        // specification work
-        $product->specifications()->save(new Specification(['name' =>$request['specification_name_1'] , 'value' => $request['specification_value_1']]));
-        $product->specifications()->save(new Specification(['name' =>$request['specification_name_2'] , 'value' => $request['specification_value_2']]));
-        $product->specifications()->save(new Specification(['name' =>$request['specification_name_3'] , 'value' => $request['specification_value_3']]));
-        $product->specifications()->save(new Specification(['name' =>$request['specification_name_4'] , 'value' => $request['specification_value_4']]));
-        $product->specifications()->save(new Specification(['name' =>$request['specification_name_5'] , 'value' => $request['specification_value_5']]));
-        $product->specifications()->save(new Specification(['name' =>$request['specification_name_6'] , 'value' => $request['specification_value_6']]));
-        $product->specifications()->save(new Specification(['name' =>$request['specification_name_7'] , 'value' => $request['specification_value_7']]));
-        $product->specifications()->save(new Specification(['name' =>$request['specification_name_8'] , 'value' => $request['specification_value_8']]));
-        $product->specifications()->save(new Specification(['name' =>$request['specification_name_9'] , 'value' => $request['specification_value_9']]));
-        $product->specifications()->save(new Specification(['name' =>$request['specification_name_10'] , 'value' => $request['specification_value_10']]));
-
+        for ($i = 0; $i < 5; $i++)
+            {
+                $keyword = Keyword::where('name' ,'=' , $request['keyword_'.$i]);
+                    if($keyword->count() <= 0){
+                    $product->keywords()->save(new Keyword(['name' => $request['keyword_'.$i]]));
+                    }else if($keyword->count() > 0){
+                    $product->keywords()->attach(['keyword_id'=> $keyword->first()->id ]);
+                    }
+            }
+            for ($i = 0; $i < 5; $i++)
+            {
+                $color = Color::where('name' ,'=' , $request['color_'.$i]);
+                    if($color->count() <= 0){
+                    $product->colors()->save(new Color(['name' => $request['color_'.$i]]));
+                    }else if($color->count() > 0){
+                    $product->colors()->attach(['color_id'=> $color->first()->id ]);
+                    }
+            }
+            for ($i = 0; $i < 5; $i++)
+            {
+                $product->specifications()->save(new Specification(['name' =>$request['specification_name_'.$i] , 'value' => $request['specification_value_'.$i]]));
+            }
         return $request->all();
         }
 
