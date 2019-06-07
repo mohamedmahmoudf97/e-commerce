@@ -1,10 +1,12 @@
 @extends('admin.master')
-
+@section('styles')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css">
+@endsection
 @section('content')
 <h1 class="text-center">
         Add Product
     </h1>
-    {!! Form::open(['method'=>'POST', 'action'=> 'productController@store', 'files'=>true]) !!}
+    {!! Form::open(['method'=>'POST', 'action'=> 'productController@store','files'=>true]) !!}
     <div class="form-group">
         {!! Form::label('name', 'name:') !!}
         {!! Form::text('name', null, ['class'=>'form-control'])!!}
@@ -92,67 +94,18 @@
                     {!! Form::text('specification_value_'.$i, null, ['class'=>'form-control' , 'placeholder'=>'value'])!!}
                 </div>
             @endfor
-        {{-- <div class="form-group col-6">
-            {!! Form::text('specification_name_1', null, ['class'=>'form-control' , 'placeholder'=>'name'])!!}
-        </div>
-        <div class="form-group col-6">
-            {!! Form::text('specification_value_1', null, ['class'=>'form-control' , 'placeholder'=>'value'])!!}
-        </div>
-        <div class="form-group col-6">
-            {!! Form::text('specification_name_2', null, ['class'=>'form-control' , 'placeholder'=>'name'])!!}
-        </div>
-        <div class="form-group col-6">
-            {!! Form::text('specification_value_2', null, ['class'=>'form-control' , 'placeholder'=>'value'])!!}
-        </div>
-        <div class="form-group col-6">
-            {!! Form::text('specification_name_3', null, ['class'=>'form-control' , 'placeholder'=>'name'])!!}
-        </div>
-        <div class="form-group col-6">
-            {!! Form::text('specification_value_3', null, ['class'=>'form-control' , 'placeholder'=>'value'])!!}
-        </div>
-        <div class="form-group col-6">
-            {!! Form::text('specification_name_4', null, ['class'=>'form-control' , 'placeholder'=>'name'])!!}
-        </div>
-        <div class="form-group col-6">
-            {!! Form::text('specification_value_4', null, ['class'=>'form-control' , 'placeholder'=>'value'])!!}
-        </div>
-        <div class="form-group col-6">
-            {!! Form::text('specification_name_5', null, ['class'=>'form-control' , 'placeholder'=>'name'])!!}
-        </div>
-        <div class="form-group col-6">
-            {!! Form::text('specification_value_5', null, ['class'=>'form-control' , 'placeholder'=>'value'])!!}
-        </div>
-        <div class="form-group col-6">
-            {!! Form::text('specification_name_6', null, ['class'=>'form-control' , 'placeholder'=>'name'])!!}
-        </div>
-        <div class="form-group col-6">
-            {!! Form::text('specification_value_6', null, ['class'=>'form-control' , 'placeholder'=>'value'])!!}
-        </div>
-        <div class="form-group col-6">
-            {!! Form::text('specification_name_7', null, ['class'=>'form-control' , 'placeholder'=>'name'])!!}
-        </div>
-        <div class="form-group col-6">
-            {!! Form::text('specification_value_7', null, ['class'=>'form-control' , 'placeholder'=>'value'])!!}
-        </div>
-        <div class="form-group col-6">
-            {!! Form::text('specification_name_8', null, ['class'=>'form-control' , 'placeholder'=>'name'])!!}
-        </div>
-        <div class="form-group col-6">
-            {!! Form::text('specification_value_8', null, ['class'=>'form-control' , 'placeholder'=>'value'])!!}
-        </div>
-        <div class="form-group col-6">
-            {!! Form::text('specification_name_9', null, ['class'=>'form-control' , 'placeholder'=>'name'])!!}
-        </div>
-        <div class="form-group col-6">
-            {!! Form::text('specification_value_9', null, ['class'=>'form-control' , 'placeholder'=>'value'])!!}
-        </div>
-        <div class="form-group col-6">
-            {!! Form::text('specification_name_10', null, ['class'=>'form-control' , 'placeholder'=>'name'])!!}
-        </div>
-        <div class="form-group col-6">
-            {!! Form::text('specification_value_10', null, ['class'=>'form-control' , 'placeholder'=>'value'])!!}
-        </div> --}}
     </div>
+    <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroupFileAddon01">product images</span>
+            </div>
+            <div class="custom-file">
+              <input type="file" name="images[]" multiple class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+              <label class="custom-file-label" for="inputGroupFile01">upload your gallery</label>
+            </div>
+          </div>
+
+
     <div class="form-group ">
         {!! Form::submit('Create Post', ['class'=>'btn btn-dark float-right']) !!}
     </div>
@@ -162,6 +115,6 @@
     @endsection
 
 @section('script')
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
 @endsection
 

@@ -18,6 +18,7 @@ use App\Keyword;
 
 use App\Specification;
 
+use App\Image;
 class productController extends Controller
 {
     /**
@@ -70,7 +71,10 @@ class productController extends Controller
             {
                 $color = Color::where('name' ,'=' , $request['color_'.$i]);
                     if($color->count() <= 0){
-                    $product->colors()->save(new Color(['name' => $request['color_'.$i]]));
+                    if(!empty($request['color_'.$i]))
+                    {
+                        $product->colors()->save(new Color(['name' => $request['color_'.$i]]));
+                    }
                     }else if($color->count() > 0){
                     $product->colors()->attach(['color_id'=> $color->first()->id ]);
                     }
@@ -79,7 +83,13 @@ class productController extends Controller
             {
                 $product->specifications()->save(new Specification(['name' =>$request['specification_name_'.$i] , 'value' => $request['specification_value_'.$i]]));
             }
-        return $request->all();
+        $files = $request->file('images');
+        foreach ($files as $file) {
+            $name = time() . $file->getClientOriginalName();
+            $file->move('images' , $name);
+            $product->images()->save(new Image(['path' =>$name]));
+        }
+        return ;
         }
 
     /**
