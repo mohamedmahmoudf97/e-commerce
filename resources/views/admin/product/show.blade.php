@@ -27,4 +27,11 @@
     @endforeach
 </ul>
 <a href="{{route('product.edit' , $product->id)}}" class="btn btn-info m-5 btn-block">see more</a>
+{!! Form::open(['method'=>'DELETE', 'action'=> ['productController@destroy' , $product->id], 'files'=>true]) !!}
+<div class="form-group ">
+        {!! Form::submit('delete', ['class'=>'btn btn-danger m-5 btn-block']) !!}
+    </div>
+{!! Form::close() !!}
+
+
 @endsection

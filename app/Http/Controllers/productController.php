@@ -28,7 +28,7 @@ class productController extends Controller
     public function index()
     {
         //
-        $products = Product::whereId(47)->get();
+        $products = Product::all();
         return view('admin.product.index',compact('products'));
     }
 
@@ -212,7 +212,7 @@ class productController extends Controller
             }
         }
 
-         return ;
+         return $request->all();
     }
 
     /**
@@ -224,5 +224,37 @@ class productController extends Controller
     public function destroy($id)
     {
         //
+        $product = Product::findOrFail($id);
+        if ($product->has('colors')) {
+            foreach ($product->colors as $colors) {
+                $color = Color::findOrFail($colors->id);
+                if($color->products->count() > 1){
+                    $product->colors()->detach($colors->id);
+                }else{
+                    $colors->where('id',$colors->id)->delete();
+                    }
+                }
+        }
+        if ($product->has('keywords')) {
+            foreach ($product->keywords as $keywords) {
+            $keyword = Keyword::findOrFail($keywords->id);
+            if($keyword->products->count() > 1){
+                $product->keywords()->detach($keywords->id);
+            }else if($keyword->products->count() <= 1){
+                $product->keywords()->detach($keywords->id);
+                $keywords->where('id',$keywords->id)->delete();
+                }
+            }
+        }
+        if ($product->has('specifications')) {
+            foreach ($product->specifications as $specification) {
+                $specification = Specification::findOrFail($specification->id);
+                $specification->delete();
+                $product->specifications()->detach($specification->id);
+                $specification->where('id',$specification->id)->delete();
+            }
+        }
+        $product->delete();
+        return $product;
     }
 }
