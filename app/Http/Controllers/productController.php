@@ -114,8 +114,6 @@ class productController extends Controller
     public function edit($id)
     {
         //
-        $array_for_keywords=['keyword_1','keyword_2','keyword_3','keyword_
-        ','keyword_4','keyword_5'];
         $product = Product::findOrFail($id);
         $brand = Brand::all();
         $subcategory = Subcategory::all();
@@ -134,6 +132,23 @@ class productController extends Controller
         //
         $product = Product::find($id);
 
+        if ($product->has('images')) {
+            foreach($product->images as $image){
+                if($request[str_replace('.','_',$image->path)] == 2){
+                    $product->images()->detach($image->id);
+                    $image->delete();
+                }
+            }
+        }
+        if (isset($request['images'])) {
+
+            $files = $request->file('images');
+            foreach ($files as $file) {
+                $name = time() . $file->getClientOriginalName();
+                $file->move('images' , $name);
+                $product->images()->save(new Image(['path' =>$name]));
+            }
+        }
         $product->update($request->all());
         if ($product->has('colors')) {
             foreach ($product->colors as $colors) {
@@ -207,6 +222,12 @@ class productController extends Controller
                 $specification->delete();
                 $product->specifications()->detach($specification->id);
                 $specification->where('id',$specification->id)->delete();
+            }
+        }
+        if ($product->has('images')) {
+            foreach($product->images as $image){
+                    $product->images()->detach($image->id);
+                    $image->delete();
             }
         }
         $product->delete();

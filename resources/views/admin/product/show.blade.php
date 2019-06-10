@@ -3,6 +3,9 @@
 <h1 class="text-center">
     All Products with :category
 </h1>
+@foreach ($product->images as $image)
+<img src="/images/{{$image->path}}" class="d-inline w-25" alt="...">
+@endforeach
 <h2>{{$product->name}}</h2>
 <h3>{{$product->price}}</h3>
 <h4>{{$product->description}}</h4>

@@ -4,7 +4,9 @@
 <h1 class="text-center">
         Add Product
     </h1>
+
     {!! Form::open(['method'=>'PATCH', 'action'=> ['productController@update' , $product->id], 'files'=>true]) !!}
+
     <div class="form-group">
         {!! Form::label('name', 'name:') !!}
         {!! Form::text('name', $product->name , ['class'=>'form-control' ])!!}
@@ -48,7 +50,7 @@
     <div class="form-row">
         <div class="form-check col-6">
             <input @if ($product->on_sale == '1')
-checked
+                checked
             @endif class="form-check-input" type="checkbox" name="on_sale" id="on_sale" value="1" >
             <label class="form-check-label" for="on_sale">
               on sale
@@ -98,6 +100,27 @@ checked
             </div>
         @endforeach
     </div>
+    <div class="form-row">
+            @foreach ($product->images as $image)
+            <div class="form-check col-4">
+                    <img src="/images/{{$image->path}}" class="d-block w-50 h-50" alt="...">
+            <input class="form-check-input" type="checkbox" name="{{$image->path}}" id="{{$image->id}}" value="2" >
+                    <label class="form-check-label" for="{{$image->id}}">
+                      delete
+                    </label>
+                  </div>
+        @endforeach
+        </div>
+    <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroupFileAddon01">product images</span>
+            </div>
+            <div class="custom-file">
+              <input type="file" name="images[]" multiple class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+              <label class="custom-file-label" for="inputGroupFile01">upload more images</label>
+            </div>
+          </div>
+
     <div class="form-group ">
         {!! Form::submit('save', ['class'=>'btn btn-dark float-right']) !!}
     </div>
