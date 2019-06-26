@@ -30,7 +30,15 @@ class productController extends Controller
     {
         //
         $products = Product::all();
+
         return view('admin.product.index',compact('products'));
+    }
+    public function getproducts()
+    {
+        header("Access-Control-Allow-Origin: *");
+
+        $products = Product::all();
+        return $products;
     }
 
     /**

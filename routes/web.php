@@ -17,4 +17,7 @@ use App\Category;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('angular_api', 'productController@getproducts');
+
 Route::resource('admin/product','productController');
+Route::resource('admin/category','categoryController');
