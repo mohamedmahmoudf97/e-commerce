@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Category;
 
 use App\Subcategory;
+
+use App\Image;
 class categoryController extends Controller
 {
     /**
@@ -29,6 +31,7 @@ class categoryController extends Controller
     public function create()
     {
         //
+        return view('admin.category.create');
     }
 
     /**
@@ -40,6 +43,12 @@ class categoryController extends Controller
     public function store(Request $request)
     {
         //
+        $category= Category::create($request->all());
+        $file = $request->file('image');
+            $name = time() . $file->getClientOriginalName();
+            $file->move('images' , $name);
+            $category->images()->save(new Image(['path' =>$name]));
+        return $request->all();
     }
 
     /**
@@ -51,6 +60,8 @@ class categoryController extends Controller
     public function show($id)
     {
         //
+        $category = Category::findOrFail($id);
+        return view('admin.category.show' , compact(['category']));
     }
 
     /**
@@ -62,6 +73,8 @@ class categoryController extends Controller
     public function edit($id)
     {
         //
+        $category = Category::findOrFail($id);
+        return view('admin.category.edit',compact(['category']));
     }
 
     /**
@@ -74,6 +87,16 @@ class categoryController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $category= Category::find($id);
+        $category->update($request->all());
+        // # code...
+        // }
+        // $file = $request->file('image');
+        //     $name = time() . $file->getClientOriginalName();
+        //     $file->move('images' , $name);
+        //     $category->images()->save(new Image(['path' =>$name]));
+        return $request->all();
     }
 
     /**
@@ -85,5 +108,7 @@ class categoryController extends Controller
     public function destroy($id)
     {
         //
+        $category= Category::find($id)->delete();
+
     }
 }

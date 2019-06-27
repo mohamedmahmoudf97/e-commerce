@@ -12,4 +12,8 @@ class Category extends Model
     {
         return $this->hasMany('App\Subcategory');
     }
+    public function images()
+    {
+        return $this->belongsToMany('App\Image')->withTimestamps();;
+    }
 }

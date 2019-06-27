@@ -2,7 +2,7 @@
 @section('content')
 <h1 class="text-center">
     categories with subcategories
-<table class="table table-striped table-dark font-weight-light">
+<table class="table table-striped font-weight-light" style="font-size:32px;">
     <thead>
       <tr>
         <th scope="col">id</th>
@@ -16,10 +16,13 @@
 
       <tr>
         <th scope="row">{{$category->id}}</th>
-        <td>{{$category->name}}</td>
+        <td>    <a href="{{route('category.show',$category->id)}}" class="text-decoration-none">
+                {{$category->name}}    </a>
+            </td>
         <td>no image</td>
-        <td>@mdo</td>
+        <td>{{$category->created_at}}</td>
       </tr>
+
 @endforeach
     </tbody>
   </table>
