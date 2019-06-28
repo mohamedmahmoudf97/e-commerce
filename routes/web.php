@@ -17,7 +17,18 @@ use App\Category;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('angular_api', 'productController@getproducts');
 
-Route::resource('admin/product','productController');
-Route::resource('admin/category','categoryController');
+Route::get('angular_api', 'productController@getproducts');
+Route::get('/admin', function () {
+    return view('home');
+});
+Auth::routes();
+
+Route::get('/', 'HomeController@index')->name('home');
+
+
+
+Route::group(['middleware' => 'isAdmin'], function () {
+    Route::resource('admin/product','productController');
+    Route::resource('admin/category','categoryController');
+});

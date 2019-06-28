@@ -44,4 +44,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Product');
     }
+    public function isAdmin($user){
+        foreach ($user->roles as $role) {
+            if ($role->name == "admin" ){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+    }
 }
