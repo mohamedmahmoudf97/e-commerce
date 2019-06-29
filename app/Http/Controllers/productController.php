@@ -97,7 +97,7 @@ class productController extends Controller
             $file->move('images' , $name);
             $product->images()->save(new Image(['path' =>$name]));
         }
-        return ;
+        return redirect('/admin/product');
         }
 
     /**
@@ -190,7 +190,7 @@ class productController extends Controller
             }
         }
 
-         return $request->all();
+        return redirect('/admin/product');
     }
 
     /**
@@ -239,6 +239,6 @@ class productController extends Controller
             }
         }
         $product->delete();
-        return $product;
+        return redirect('/admin/product');
     }
 }

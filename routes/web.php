@@ -31,4 +31,10 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::group(['middleware' => 'isAdmin'], function () {
     Route::resource('admin/product','productController');
     Route::resource('admin/category','categoryController');
+    Route::get('admin/category/subcategory/create/{id}', [
+        'uses' => 'categoryController@create_subcategory'
+    ]);
+    Route::post('admin/category/subcategory/store{id}', [
+        'uses' => 'categoryController@store_subcategory'
+    ]);
 });
